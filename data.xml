@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<opencv_storage>
+<opencv_ml_knn>
+  <format>3</format>
+  <is_classifier>1</is_classifier>
+  <default_k>10</default_k>
+  <samples type_id="opencv-matrix">
+    <rows>10</rows>
+    <cols>2</cols>
+    <dt>f</dt>
+    <data>
+      343. 3.00000024e+00 356. 3.07999969e+00 334. 2.90322566e+00
+      3.35500000e+02 3. 325. 3.02152610e+00 90. 1.20000005e+00 92.
+      1.10000002e+00 87. 1.10000002e+00 90. 1.10000002e+00
+      8.45000000e+01 1.</data></samples>
+  <responses type_id="opencv-matrix">
+    <rows>10</rows>
+    <cols>1</cols>
+    <dt>f</dt>
+    <data>
+      1. 1. 1. 1. 1. 0. 0. 0. 0. 0.</data></responses></opencv_ml_knn>
+</opencv_storage>
