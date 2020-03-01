@@ -1,33 +1,23 @@
 import cv2 as cv
-import serial
-import time
+from connect import *
 
 x = 1
 y = 1
 w = 0
 h = 0
 is_fist = False
-now_x = 0
-now_y = 12
-count = 0
-string2 = "0@o\n"
-is_down = True
+change_to_fist = False
 
 
 def control():
-    global x, y, w, h, is_fist, now_y, now_x, count, string2,is_down
+    global x, y, w, h, is_fist, change_to_fist
+
+    init_serial()
+
     cap = cv.VideoCapture(2)
     if cap is None:
         print("Cant open the camera.")
         exit(1)
-
-    # serial
-    ser = serial.Serial("/dev/ttyUSB0", 9600, timeout=0.5)
-    if not ser.isOpen():
-        print("Cant open serial")
-        exit(1)
-
-    # serial
 
     frame_width = cap.get(cv.CAP_PROP_FRAME_WIDTH) / 3
     frame_height = cap.get(cv.CAP_PROP_FRAME_HEIGHT) / 3
@@ -55,37 +45,28 @@ def control():
             cv.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
             cv.putText(frame, "Palm", (x, y), cv.FONT_HERSHEY_PLAIN, 1, (0, 255, 0), 1)
             is_fist = False
+            change_to_fist = False
         elif len(fist_rects) > 0:
             (x, y, w, h) = fist_rects[0]
             cv.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
             cv.putText(frame, "Fist", (x, y), cv.FONT_HERSHEY_PLAIN, 1, (0, 255, 0), 1)
             is_fist = True
 
-        tarX = int(((x + w / 2) / frame_width * 20 - 8))
-        tarY = int(16 - (y + h / 2) / frame_height * 18 + 10)
+        tarX = ((x + w / 2) / frame_width * 20 - 8)
+        tarY = 16 - (y + h / 2) / frame_height * 18 + 10
         print("tarX : ", tarX, "\ttarY : ", tarY, "\tis_fist : ", is_fist)
 
-        count += 1
-        if count == 8:
-            if is_fist:
-                tarY += 1
-            string = "%" + str(tarX) + "@" + str(tarY) + "@" + string2
-            if is_fist:
-                string2 = "3@c\n"
-                if is_down:
-                    string = "%" + str(tarX) + "@" + str(tarY) + "@" + "0@c\n"
-                    time.sleep(0.6)
-                    is_down = False
-            else:
-                string2 = "0@o\n"
-                is_down = True
-            ser.write(string.encode("utf-8"))
-            count = 0
+        catch_height = 1
+        if is_fist:
+            if not change_to_fist:
+                write_serial(tarX, tarY + 1, catch_height, 0.1, is_fist)
+                change_to_fist = True
+            catch_height = 3
+        write_serial(tarX, tarY, catch_height, 0.1, is_fist)
 
         cv.imshow("Frame", frame)
 
-        key = cv.waitKey(50)
+        key = cv.waitKey(23)
         if key == 27:
+            cv.destroyAllWindows()
             break
-
-    cv.destroyAllWindows()

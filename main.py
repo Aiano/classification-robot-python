@@ -1,5 +1,5 @@
 from classificationFunc import *
-from control import *
+from controlFunc import *
 import tkinter
 
 if __name__ == '__main__':

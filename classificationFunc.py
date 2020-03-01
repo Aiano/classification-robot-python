@@ -2,7 +2,6 @@ from classification.preprocess import *
 from classification.division import *
 from classification.knn import *
 from connect import *
-import time
 
 background = None
 has_got_background = False
@@ -32,39 +31,28 @@ def classification():
             contours, feathers = divide(result)
             draw_division(roi, contours, feathers)
 
-            x = int((feathers[0][0][0] - 108) / 212 * 12)
-            y = int(feathers[0][0][1] / 212 * 12 + 12)
+            x = (feathers[0][0][0] - 108) / 212 * 12
+            y = feathers[0][0][1] / 212 * 12 + 12
             print("x", x, "y:", y)
             prediction = predict(feathers)
             target_class = prediction[0][0]
             print("target_class:", target_class)
 
-            data = "#" + str(x) + "@" + str(y) + "@3@o"
-            write_serial(data)
-            print(data)
-
-            time.sleep(2.5)
-
-            data = "#" + str(x) + "@" + str(y) + "@0@c"
-            write_serial(data)
-            print(data)
-
-            time.sleep(2.5)
-
-            data = "#" + str(x) + "@" + str(y) + "@3@"
-            write_serial(data)
-            print(data)
-
             cv.imshow("roi", roi)
             cv.waitKey(0)
 
-            data = "#8" + "@" + str(12 + target_class * 2) + "@1@o"
-            write_serial(data)
-            print(data)
+            write_serial(x, y, 3, 2.5, False)
+            print("X : ", x, "\tY : ", y, "\tZ:", 3, "\tDelay Seconds : ", 2.5, "\tCatch Condition : ", False)
 
-            time.sleep(2.5)
+            write_serial(x, y, 0, 2.5, True)
+            print("X : ", x, "\tY : ", y, "\tZ:", 0, "\tDelay Seconds : ", 2.5, "\tCatch Condition : ", True)
 
-            write_serial("*")
+            write_serial(x, y, 3, 2.5, True)
+            print("X : ", x, "\tY : ", y, "\tZ:", 3, "\tDelay Seconds : ", 2.5, "\tCatch Condition : ", True)
+
+            write_serial(8, 12 + target_class * 2, 1, 2.5, False)
+            print("X : ", 8, "\tY : ", 12 + target_class * 2, "\tZ:", 1, "\tDelay Seconds : ", 2.5,
+                  "\tCatch Condition : ", False)
 
         cv.imshow("roi", roi)
     cv.destroyAllWindows()
