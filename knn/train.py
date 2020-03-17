@@ -7,7 +7,7 @@ has_got_background = False
 has_added_sample = False
 
 if __name__ == '__main__':
-    cap = cv.VideoCapture(2)
+    cap = cv.VideoCapture(1)
     while True:
         ret, frame = cap.read()
         key = cv.waitKey(20)
