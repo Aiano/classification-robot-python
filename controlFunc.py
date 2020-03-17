@@ -66,7 +66,7 @@ def control():
 
         cv.imshow("Frame", frame)
 
-        key = cv.waitKey(23)
+        key = cv.waitKey(1)
         if key == 27:
             cv.destroyAllWindows()
             break
