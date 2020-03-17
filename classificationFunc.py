@@ -41,8 +41,8 @@ def classification():
             cv.imshow("roi", roi)
             cv.waitKey(0)
 
-            write_serial(x, y, 3, 2.5, False)
-            print("X : ", x, "\tY : ", y, "\tZ:", 3, "\tDelay Seconds : ", 2.5, "\tCatch Condition : ", False)
+            write_serial(x, y, 5, 1.5, False)
+            print("X : ", x, "\tY : ", y, "\tZ:", 5, "\tDelay Seconds : ", 1.5, "\tCatch Condition : ", False)
 
             write_serial(x, y, 0, 1, False)
             print("X : ", x, "\tY : ", y, "\tZ:", 0, "\tDelay Seconds : ", 1, "\tCatch Condition : ", False)
@@ -50,15 +50,15 @@ def classification():
             write_serial(x, y, 0, 1, True)
             print("X : ", x, "\tY : ", y, "\tZ:", 0, "\tDelay Seconds : ", 1, "\tCatch Condition : ", True)
 
-            write_serial(x, y, 3, 1, True)
-            print("X : ", x, "\tY : ", y, "\tZ:", 3, "\tDelay Seconds : ", 1, "\tCatch Condition : ", True)
+            write_serial(x, y, 5, 1, True)
+            print("X : ", x, "\tY : ", y, "\tZ:", 5, "\tDelay Seconds : ", 1, "\tCatch Condition : ", True)
 
-            write_serial(8, 12 + target_class * 2, 1, 2.5, True)
-            print("X : ", 8, "\tY : ", 12 + target_class * 2, "\tZ:", 1, "\tDelay Seconds : ", 2.5,
+            write_serial(8, 12 + target_class * 2, 5, 1.5, True)
+            print("X : ", 8, "\tY : ", 12 + target_class * 2, "\tZ:", 5, "\tDelay Seconds : ", 1.5,
                   "\tCatch Condition : ", True)
 
-            write_serial(8, 12 + target_class * 2, 1, 1, False)
-            print("X : ", 8, "\tY : ", 12 + target_class * 2, "\tZ:", 1, "\tDelay Seconds : ", 1,
+            write_serial(8, 12 + target_class * 2, 5, 1, False)
+            print("X : ", 8, "\tY : ", 12 + target_class * 2, "\tZ:", 5, "\tDelay Seconds : ", 1,
                   "\tCatch Condition : ", False)
 
         cv.imshow("roi", roi)
